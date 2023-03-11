@@ -1,10 +1,28 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @project %>
+<h1><%= @project.title %></h1>
+<h2>Status: <%= @project.current_state.capitalize %></h2>
 
 <div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
-
-  <%= button_to "Destroy this project", @project, method: :delete %>
+  <%= link_to "Edit", edit_project_path(@project) %> |
+  <%= link_to 'Delete', project_path(@project), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
 </div>
+
+<h2>Conversation</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Type</th>
+      <th scope="col">Timestamp</th>
+      <th scope="col">Detail</th>
+      <th scope="col">Additional Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @project.events.each do |event| %>
+      <%= render event.eventable_type.downcase, event: event %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render "comment_form", project: @project, comment: Comment.new() %>

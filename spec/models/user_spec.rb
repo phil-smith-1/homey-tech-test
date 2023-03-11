@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it { is_expected.to have_many(:comments) }
-  it { is_expected.to have_many(:status_changes) }
 end

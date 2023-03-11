@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class ProjectTest < ActiveSupport::TestCase
+class EventTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

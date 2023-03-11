@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Statesman Transition model linked to Project
 class ProjectTransition < ApplicationRecord
   # include Statesman::Adapters::ActiveRecordTransition
 
@@ -9,6 +12,7 @@ class ProjectTransition < ApplicationRecord
   # self.updated_timestamp_column = nil
 
   belongs_to :project, inverse_of: :transitions
+  has_one :event, as: :eventable, dependent: :destroy
 
   after_destroy :update_most_recent, if: :most_recent?
 
@@ -16,7 +20,9 @@ class ProjectTransition < ApplicationRecord
 
   def update_most_recent
     last_transition = project.transitions.order(:sort_key).last
-    return unless last_transition.present?
-    last_transition.update_column(:most_recent, true)
+    return if last_transition.blank?
+
+    last_transition.most_recent = true
+    last_transition.save
   end
 end

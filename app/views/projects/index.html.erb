@@ -3,12 +3,34 @@
 <h1>Projects</h1>
 
 <div id="projects">
-  <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
-  <% end %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Status</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= project.title %></td>
+          <td><%= project.current_state %></td>
+          <td>
+            <%= link_to "Show", project %>
+          </td>
+          <td>
+            <%= link_to "Edit", edit_project_path(project) %>
+          </td>
+          <td>
+            <%= link_to 'Delete', project_path(project), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 
 <%= link_to "New project", new_project_path %>
