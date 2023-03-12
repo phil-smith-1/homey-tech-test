@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1 or /projects/1.json
   def show
     @project = Project.includes(:events, :comments, :transitions).find(params[:id])
+    @comment = Comment.new()
   end
 
   # GET /projects/new
